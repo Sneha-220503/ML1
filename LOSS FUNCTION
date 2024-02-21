@@ -1,0 +1,53 @@
+#include <stdio.h>
+#include <math.h>
+
+// Function to compute the loss function
+double computeError(double w1, double w2, double data[4][3]) {
+    double Error = 0;
+    for (int i = 0; i < 4; i++) {
+        double x1 = data[i][0];
+        double x2 = data[i][1];
+        double y = data[i][2];
+        double predictedY = w1 * x1 + w2 * x2;
+        error += pow(predictedY - y, 2);
+    }
+    return loss / 2; // Mean squared error
+}
+
+// Function to compute the gradient of the loss function with respect to each weight
+void computeGradient(double w1, double w2, double data[4][3]) {
+    double grad_w1 = 0;
+    double grad_w2 = 0;
+    for (int i = 0; i < 4; i++) {
+        double x1 = data[i][0];
+        double x2 = data[i][1];
+        double y = data[i][2];
+        double predictedY = w1 * x1 + w2 * x2;
+        grad_w1 += (predictedY - y) * x1;
+        grad_w2 += (predictedY - y) * x2;
+    }
+    printf("Gradient of loss function with respect to w1: %f\n", grad_w1);
+    printf("Gradient of loss function with respect to w2: %f\n", grad_w2);
+}
+
+int main() {
+    double w1, w2;
+    printf("Enter the value for weight w1: ");
+    scanf("%lf", &w1);
+    printf("Enter the value for weight w2: ");
+    scanf("%lf", &w2);
+
+    double data[4][3] = {
+        {1, 0, 1},
+        {2, 1, 9},
+        {0, 1, 1},
+        {-2, 1, 7}
+    };
+
+    double loss = computeError(w1, w2, data);
+    printf("Loss function value: %f\n", loss);
+
+    computeGradient(w1, w2, data);
+
+    return 0;
+}
